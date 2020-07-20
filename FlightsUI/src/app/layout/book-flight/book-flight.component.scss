@@ -1,0 +1,16 @@
+form{
+    mat-form-field{
+        max-width: 350px;
+        display: block;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.payment{
+    text-align: right;
+}
+
+.error{
+    font-size: .9em;
+    color:orangered;
+}

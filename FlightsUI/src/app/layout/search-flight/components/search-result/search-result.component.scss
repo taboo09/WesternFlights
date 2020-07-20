@@ -1,0 +1,20 @@
+.flight-results{
+    .flights-list{
+        width: 100%;
+        padding-bottom: 2rem;
+        
+        .flight-label{
+            & > input{
+                visibility: hidden; /* Makes input not-clickable */
+            }
+            & > input + app-tile{
+                cursor: pointer;
+            }
+        }
+    }
+
+    .book-flight-btn{
+        margin-left: 15px;
+        min-width: 150px;
+    }
+}

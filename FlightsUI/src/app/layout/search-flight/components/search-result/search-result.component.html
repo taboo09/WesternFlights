@@ -1,0 +1,31 @@
+<div class="flight-results my-15">
+    <div class="flights-list">
+        <h4 class="px-15">Departure Flights:</h4>
+        <div class="results" *ngIf="departureFlights.length > 0 else noFlights">
+
+            <label class="flight-label" *ngFor="let flight of departureFlights" (click)="inputChecked(flight.flightId, 'dept')">
+                <input type="radio" name="dept-flight" value="flight.flightId" />
+                <app-tile [flight]="flight" [selected]="departureSelectedFlightId === flight.flightId"></app-tile>
+            </label>
+            
+        </div>
+    </div>
+
+    <div class="flights-list" *ngIf="departureFlights.length > 0 && returnFlights">
+        <h4 class="px-15">Return Flights:</h4>
+        <div class="results" *ngIf="returnFlights.length > 0 else noFlights">
+            
+            <label class="flight-label" *ngFor="let flight of returnFlights" (click)="inputChecked(flight.flightId, 'return')">
+                <input type="radio" name="return-flight" value="flight.flightId" />
+                <app-tile [flight]="flight" [selected]="returnSelectedFlightId === flight.flightId"></app-tile>
+            </label>
+
+        </div>
+    </div>
+
+    <button mat-flat-button color="accent" class="book-flight-btn" [disabled]="!flightsAreSelected()" (click)="bookFlight()">Book Flight</button>
+</div>
+
+<ng-template #noFlights>
+    <h4>No flight could be found. Please refine your search criteria and try again!</h4>
+</ng-template>

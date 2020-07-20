@@ -1,0 +1,12 @@
+.booked-flights{
+    min-height: 85vh;
+
+    table{
+        width: 94%;
+        margin: 2.5rem auto;
+
+        .mat-cell{
+            font-size: .9em;
+        }
+    }
+}

@@ -1,0 +1,60 @@
+<p class="flight-return-toggle">
+    <mat-checkbox [(ngModel)]="returnSelected" (change)="selectReturnFlight()">Select return</mat-checkbox>
+    <span class="booked-flights" routerLink="/admin-flight">See Booked Flights</span>
+</p>
+
+<form novalidate [formGroup]="flightForm">
+    <div class="panel mat-elevation-z2">
+        <div class="locations">
+
+            <mat-form-field class="departure" appearance="outline">
+                <mat-label>From</mat-label>
+                <mat-select formControlName="departureId" (selectionChange)="departureChanged($event)">
+                    <mat-option *ngFor="let airport of airports" [value]="airport.airportId">
+                        {{ airport.airportCode }}, {{ airport.airportCity }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="swap text-center">
+                <i class="fas fa-retweet" matTooltip="Change Airports" matTooltipClass="tooltip-lg" (click)="swapAirports()"></i>
+            </div>
+            
+            <mat-form-field class="arrival" appearance="outline">
+                <mat-label>To</mat-label>
+                <mat-select formControlName="arrivalId">
+                    <mat-option *ngFor="let airport of airports" [value]="airport.airportId" [disabled]="airport.airportId === departureIdSelected">
+                        {{ airport.airportCode }}, {{ airport.airportCity }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="dates">
+
+            <mat-form-field class="departure-date"  appearance="outline">
+                <mat-label>Departure Date</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="departureDate" (dateInput)="OnDateChange($event.value)" >
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="return-date"  appearance="outline">
+                <mat-label>Return Date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="returnDate" >
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 ></mat-datepicker>
+            </mat-form-field>
+
+            <div class="submit-btn">
+                <button mat-fab color="warn" class="fab-btn" [disabled]="!flightForm.valid || !flightForm.dirty" (click)="searchForFlights()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button mat-flat-button color="warn" class="flat-btn hidden" [disabled]="!flightForm.valid || !flightForm.dirty" (click)="searchForFlights()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</form>

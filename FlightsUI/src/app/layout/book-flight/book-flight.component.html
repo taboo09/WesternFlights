@@ -1,0 +1,94 @@
+<mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step [stepControl]="customerForm">
+      <form [formGroup]="customerForm">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" formControlName="name" maxlength="36">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" maxlength="24">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input matInput formControlName="country" maxlength="24">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address" maxlength="50">
+        </mat-form-field>
+
+        <div>
+          <button type="submit" mat-button matStepperNext (click)="selectionChange(1)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Outbound Flight Seat</ng-template>
+      
+      <div *ngIf="deptFlightSeats else loading">
+        <h4>Departure Flight:</h4>
+        <app-seats [rows]="deptFlight.maxNumberSeats" [selectedSeats]="deptFlightSeats" (selection)="deptSeatSelected($event)"></app-seats>
+      </div>
+
+      <div class="my-15">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="selectionChange(2)">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step *ngIf="rtnFlight">
+      <ng-template matStepLabel>Return Flight Seat</ng-template>
+      <div *ngIf="rtnFlightSeats else loading">
+        <h4>Return Flight:</h4>
+        <app-seats [rows]="rtnFlight.maxNumberSeats" [selectedSeats]="rtnFlightSeats" (selection)="returnSeatSelected($event)"></app-seats>
+      </div>
+
+      <div class="my-15">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    
+    <mat-step>
+      <ng-template matStepLabel>Payment</ng-template>
+      <h4>Departure Flight:</h4>
+      <h5>Flight Code: {{ deptFlight.flightCode }}</h5>
+      <p>Departure: {{ deptFlight.departureAirportName }}</p>
+      <p>Arrival: {{ deptFlight.arrivalAirportName }}</p>
+      <p>Date: {{ deptFlight.departureDateTime | date: 'dd-MMM-yyyy' }}</p>
+      <p>Seat: 
+        <span *ngIf="deptSeat else noSeat">{{ deptSeat }}</span>
+      </p>
+      <h4>Total Price: {{ deptFlight.price }}</h4>
+
+      <div class="return-flight" *ngIf="rtnFlight">
+        <h4>Return Flight:</h4>
+        <h5>Flight Code: {{ rtnFlight?.flightCode }}</h5>
+        <p>Departure: {{ rtnFlight?.departureAirportName }}</p>
+        <p>Arrival: {{ rtnFlight?.arrivalAirportName }}</p>
+        <p>Date: {{ rtnFlight?.departureDateTime | date: 'dd-MMM-yyyy' }}</p>
+        <p>Seat: 
+          <span *ngIf="deptSeat else noSeat">{{ rtnSeat }}</span>
+        </p>
+        <h4>Total Price: {{ rtnFlight?.price }}</h4>
+      </div>
+
+      <div class="payment">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" (click)="done();stepper.reset()" 
+          [disabled]="!seatsWereSelected()">Pay</button>
+      </div>
+    </mat-step>
+</mat-vertical-stepper>
+
+<ng-template #noSeat>
+  <span class="error">Please select a seat.</span>
+</ng-template>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

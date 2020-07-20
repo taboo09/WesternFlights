@@ -1,0 +1,7 @@
+<mat-radio-group>
+    <div class="radio"  *ngFor="let seat of availableSeats">
+        <mat-radio-button [value]="seat.seat" [disabled]="seat.taken" (change)="seatIsSelected(seat.seat)">
+            {{ seat.seat }}
+        </mat-radio-button>
+    </div>
+</mat-radio-group>

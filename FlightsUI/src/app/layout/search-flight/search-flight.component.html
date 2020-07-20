@@ -1,0 +1,11 @@
+<div class="search-container">
+    <app-search-panel [airports]="airports" (searchResult)="flightSearch($event)" *ngIf="airports.length > 0 else loading"></app-search-panel>
+
+    <div *ngIf="!flightSearchInProgress else loading">
+        <app-search-result [departureFlights]="departureFlights" [returnFlights]="returnFlights" *ngIf="departureFlights"></app-search-result>
+    </div>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

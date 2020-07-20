@@ -1,0 +1,63 @@
+<div class="booked-flights">
+        
+    <div *ngIf="!searchOccurs else loading">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z2"
+            infinite-scroll
+            [infiniteScrollDistance]="1"
+            (scrolled)="onScrollDown()">
+
+            <ng-container matColumnDef="icon">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let flight"><i class="fas fa-plane-departure"></i></td>
+            </ng-container>
+            <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef>No</th>
+                <td mat-cell *matCellDef="let flight; let i = index">{{ [i + 1] }}</td>
+            </ng-container>
+            <ng-container matColumnDef="flightCode">
+                <th mat-header-cell *matHeaderCellDef>Flight Code</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.flightCode }}</td>
+            </ng-container>
+            <ng-container matColumnDef="customerName">
+                <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.customerName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="seat">
+                <th mat-header-cell *matHeaderCellDef>Seat</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.seat }}</td>
+            </ng-container>
+            <ng-container matColumnDef="departureAirport">
+                <th mat-header-cell *matHeaderCellDef>From</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.departureAirport }}</td>
+            </ng-container>
+            <ng-container matColumnDef="arrivalAirport">
+                <th mat-header-cell *matHeaderCellDef>To</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.arrivalAirport }}</td>
+            </ng-container>
+            <ng-container matColumnDef="departureDate">
+                <th mat-header-cell *matHeaderCellDef>Departure Date</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.departureDate }}</td>
+            </ng-container>
+            <ng-container matColumnDef="arrivalDate">
+                <th mat-header-cell *matHeaderCellDef>Arrival Date</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.arrivalDate }}</td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let flight">{{ flight.price | currency:'GBP' }}</td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+
+        </table>
+
+        <div *ngIf="finished else loading"></div>
+
+    </div>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

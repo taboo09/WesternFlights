@@ -1,0 +1,36 @@
+<mat-card [ngClass]="{ 'selected-tile' : selected }">
+    <div class="prefix">
+        <i class="fas fa-plane-departure"></i>
+        <span>{{ flight.departureDateTime | date:'dd MMM' }}</span>
+    </div>
+    <div class="details">
+        <div class="from">
+            {{ flight.departureAirportName }}
+        </div>
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+        <div class="to">
+            {{ flight.arrivalAirportName }}
+        </div>
+    </div>
+    <div class="times">
+        <div class="departure-time">
+            Departure Time: {{ flight.departureDateTime | date:'HH:mm' }}
+        </div>
+        <div class="flight-time">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="arrival-time">
+            Arrival Time: {{ flight.arrivalDateTime | date:'HH:mm' }}
+        </div>
+    </div>
+
+    <span class="seats" matTooltip="Available Seats" matTooltipClass="tooltip-lg">
+        <button mat-flat-button disabled >
+            <i class="fas fa-chair"></i> {{ flight.availableSeats }}
+        </button> 
+    </span>
+    
+    <i class="fas fa-check-circle selected" *ngIf="selected"></i>
+</mat-card>
