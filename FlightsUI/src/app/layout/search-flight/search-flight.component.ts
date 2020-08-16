@@ -19,7 +19,7 @@ export class SearchFlightComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAirports();
-
+   
   }
 
   getAirports(){

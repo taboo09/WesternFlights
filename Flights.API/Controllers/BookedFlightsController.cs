@@ -36,6 +36,8 @@ namespace Flights.API.Controllers
         [HttpPost]
         public async Task<IActionResult> NewBookedFlights(List<NewBookedFlightDto> flights)
         {
+            if (flights.Count == 0) return BadRequest("Please select your flights");
+            
             foreach (var flight in flights)
             {
                 if (!await _flightService.CheckSeat(flight.FlightId, flight.Seat)) 
@@ -56,7 +58,7 @@ namespace Flights.API.Controllers
             return Ok( new { message = "Your flight has been booked" });
         }
 
-        // POST api/bookedflights
+        // GET api/bookedflights
         [HttpGet]
         public async Task<IActionResult> AllBookedFlights([FromQuery] int page)
         {
